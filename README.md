@@ -68,3 +68,9 @@ kubectl apply -f Client/client-turnstile-depl.yaml
 kubectl apply -f Nginx/ingress-srv.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 ```
+
+## How does it look like
+Admin dashboard frontend
+![Management-Client](https://ucarecdn.com/e22c606a-9064-4845-9469-331a451a6164/20250509191911.png)
+Turnstile access control frontend
+![Turnstile-Client](https://ucarecdn.com/d9e270a9-5574-440b-941d-7514da23cb52/20250509191945.png)
