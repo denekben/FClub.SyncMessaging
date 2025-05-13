@@ -14,9 +14,9 @@ The solution follows a microservices pattern with 3 core backend services and 2 
 
 | Component                | Description                                                                                     | Technology Stack                          |
 |--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------|
-| Management Service       | Central business logic service handling main domain entities  | ASP.NET Core, Entity Framework Core, JWT|
-| Access Control Service   | Access validation system integrating with turnstile hardware      | ASP.NET Core, EF Core, JWT, WebSocket              |
-| Notification Service     | Manages email notifications for clients   | ASP.NET Core, ImMemoryMessageBroker, EF Core, JWT      |
+| Management Service       | Central business logic service handling main domain entities  | ASP.NET Core, C#|
+| Access Control Service   | Access validation system integrating with turnstile hardware      | ASP.NET Core, C#              |
+| Notification Service     | Manages email notifications for clients   | ASP.NET Core, C#      |
 | Admin Dashboard          | Responsive management interface for staff with role-based access control                 | React, TypeScript       |
 | Turnstile Interface      | Simulation of the club's access control system          | React, TypeScript           |
 
@@ -26,7 +26,7 @@ The solution follows a microservices pattern with 3 core backend services and 2 
 |------------|---------|
 | [FClub.Backend.SyncMessaging](https://github.com/denekben/FClub.Backend.SyncMessaging) | Micsrocesvices backend application |
 | [FClub.Backend.Common](https://github.com/denekben/FClub.Backend.Common) | Common microservice class library |
-| [FClub.Client.Management](https://github.com/denekben/FClub.Client.Management) | Admin dashboard frontend |
+| [FClub.Client.Management.SyncMessaging](https://github.com/denekben/FClub.Client.Management.SyncMessaging) | Admin dashboard frontend |
 | [Club.Client.Turnstile](https://github.com/denekben/FClub.Client.Turnstile) | Turnstile access control frontend |
 | [FClub.K8S.SyncMessaging](https://github.com/denekben/FClub.K8S.SyncMessaging) | Kubernetes deployment configurations |
 
