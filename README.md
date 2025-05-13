@@ -10,15 +10,51 @@ The solution follows a microservices pattern with 3 core backend services and 2 
 
 ![FClub Architecture Diagram](https://ucarecdn.com/15b9e9d9-585d-4cc1-8ee9-ea1243db9009/20250509154500.png)
 
+Each microservice adheres to **Clean Architecture** principles, enforcing a strict separation of concerns through modular layers:
+- **Domain Layer**: Contains core business logic, entities, and interfaces.  
+- **Application Layer**: Implements use cases.  
+- **Infrastructure Layer**: Handles external concerns (database access, messaging, APIs) via adapters.  
+- **WebUI Layer (Presentation)**: Delivers HTTP endpoints (controllers, middleware) and serves as the entry point for external requests.  
+- **Shared Layer**: Hosts cross-cutting utilities and common contracts consumed by other layers.  
+
+Dependencies flow inward: outer layers (WebUI, Infrastructure) depend on inner layers (Application, Domain), while the **Domain layer remains isolated** from all external concerns. This ensures testability, flexibility, and maintainability by decoupling business rules from implementation details. 
+![FClub Architecture Diagram Microservice](https://ucarecdn.com/e228e111-e652-4523-ade6-77d3a7ba0ba6/20250513174442.png)
+
 ## Core Components
 
 | Component                | Description                                                                                     | Technology Stack                          |
 |--------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------|
-| Management Service       | Central business logic service handling main domain entities  | ASP.NET Core, C#|
-| Access Control Service   | Access validation system integrating with turnstile hardware      | ASP.NET Core, C#              |
-| Notification Service     | Manages email notifications for clients   | ASP.NET Core, C#      |
+| Management Service       | Central business logic service handling main domain entities  | ASP.NET Core, C#, PostgreSQL|
+| Access Control Service   | Access validation system integrating with turnstile hardware      | ASP.NET Core, C#, PostgreSQL             |
+| Notification Service     | Manages email notifications for clients   | ASP.NET Core, C#, PostgreSQL     |
 | Admin Dashboard          | Responsive management interface for staff with role-based access control                 | React, TypeScript       |
 | Turnstile Interface      | Simulation of the club's access control system          | React, TypeScript           |
+
+## Security Architecture
+
+The system implements a robust **JWT-based authentication and authorization** mechanism with **role-based access control (RBAC)**. Each microservice validates incoming requests by verifying the `Bearer` JWT token in the `Authorization` header.
+
+### Key Security Features
+
+#### Strict Token Validation
+- **All requests** (client-to-server and server-to-server) require a valid JWT.
+- Tokens are signed with **different keys** for:
+  - External requests (client-facing)
+  - Internal service communication (server-to-server)
+- Validation includes:
+  - Issuer (`iss`) verification
+  - Expiration time (`exp`) checks
+
+#### Two-Tier Token System
+| Token Type       | Lifetime | Purpose                          |
+|------------------|----------|----------------------------------|
+| **Access Token** | 60 days  | Short-lived API authorization    |
+| **Refresh Token**| 360 days | Secure renewal of access tokens  |
+
+#### Role-Based Access Control (RBAC)
+- JWTs include **role claims** for granular permissions.
+- Microservices enforce access based on:
+  - User roles (e.g., `Admin`, `Manager`)
 
 ## Source Code Repositories
 
